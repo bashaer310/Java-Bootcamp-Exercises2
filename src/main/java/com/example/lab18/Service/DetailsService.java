@@ -43,9 +43,14 @@ public class DetailsService {
     }
     public void deleteDetails(Integer id){
         DetailsModel details= detailsRepository.findDetailsModelById(id);
+        CustomerModel customer= customerRepository.findCustomerModelById(id);
+
         if (details==null)
             throw new ApiException("Id not found");
 
+        customer.setDetailsModel(null);
+        customerRepository.save(customer);
         detailsRepository.delete(details);
+
     }
 }
